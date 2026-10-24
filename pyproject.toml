@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dockrail"
+version = "0.1.0"
+description = "A lightweight local and SSH remote Docker Compose helper"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name = "Ethos6"}]
+keywords = ["docker", "compose", "ssh", "deployment", "self-hosted"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Topic :: System :: Systems Administration",
+]
+
+[project.scripts]
+dockrail = "dockrail.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["dockrail*"]
