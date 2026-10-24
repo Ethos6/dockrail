@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -32,6 +33,8 @@ def compose_command(
 ) -> list[str]:
     if action not in {"up", "ps", "logs", "stop", "down"}:
         raise ValueError("unsupported Compose action")
+    if service is not None and not re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_.-]{0,47}", service):
+        raise ValueError("service name contains unsupported characters")
     binary = docker_binary() or "docker"
     command = [binary]
     if target:
