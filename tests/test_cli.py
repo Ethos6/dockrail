@@ -13,6 +13,15 @@ class FakeResult:
 
 
 class CliTests(unittest.TestCase):
+    def test_target_add_list_and_remove(self):
+        with tempfile.TemporaryDirectory() as directory:
+            config_path = Path(directory) / "config.json"
+            with patch("dockrail.config.config_path", return_value=config_path), patch("sys.stdout"):
+                self.assertEqual(cli.main(["target", "add", "prod", "deploy@host.example"]), 0)
+                self.assertEqual(cli.main(["target", "list"]), 0)
+                self.assertEqual(cli.main(["target", "remove", "prod"]), 0)
+            self.assertEqual(config_path.read_text(), '{\n  "targets": {},\n  "version": 1\n}\n')
+
     def test_init_refuses_to_overwrite(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "compose.yaml"
